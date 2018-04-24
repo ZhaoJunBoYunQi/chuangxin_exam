@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mmall.dao.ExamDao" >
+  <resultMap id="BaseResultMap" type="com.mmall.pojo.Exam" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="exam_sub" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="exam_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="exam_hall" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="exam_paper" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="exam_teacher" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="exam_time" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="exam_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.mmall.pojo.Exam" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="exam_sub" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="exam_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="exam_hall" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="exam_paper" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="exam_teacher" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="exam_time" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="exam_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="exam_stulist" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+
+  <select id="list" parameterType="Map" resultMap="BaseResultMap">
+    select * from exam
+    <if test="start!=null and size!=null">
+      limit #{start},#{size}
+    </if>
+  </select>
+  <select id="getTotal" parameterType="Map" resultType="Long">
+    select count(*) from exam
+  </select>
+
+  <sql id="Base_Column_List" >
+    id, exam_sub, exam_num, exam_hall, exam_paper, exam_teacher, exam_time, exam_state
+  </sql>
+  <sql id="Blob_Column_List" >
+    exam_stulist
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from exam
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from exam
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mmall.pojo.Exam" >
+    insert into exam (id, exam_sub, exam_num, 
+      exam_hall, exam_paper, exam_teacher, 
+      exam_time, exam_state, exam_stulist
+      )
+    values (#{id,jdbcType=INTEGER}, #{examSub,jdbcType=VARCHAR}, #{examNum,jdbcType=INTEGER}, 
+      #{examHall,jdbcType=VARCHAR}, #{examPaper,jdbcType=VARCHAR}, #{examTeacher,jdbcType=VARCHAR}, 
+      #{examTime,jdbcType=VARCHAR}, #{examState,jdbcType=INTEGER}, #{examStulist,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mmall.pojo.Exam" >
+    insert into exam
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="examSub != null" >
+        exam_sub,
+      </if>
+      <if test="examNum != null" >
+        exam_num,
+      </if>
+      <if test="examHall != null" >
+        exam_hall,
+      </if>
+      <if test="examPaper != null" >
+        exam_paper,
+      </if>
+      <if test="examTeacher != null" >
+        exam_teacher,
+      </if>
+      <if test="examTime != null" >
+        exam_time,
+      </if>
+      <if test="examState != null" >
+        exam_state,
+      </if>
+      <if test="examStulist != null" >
+        exam_stulist,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="examSub != null" >
+        #{examSub,jdbcType=VARCHAR},
+      </if>
+      <if test="examNum != null" >
+        #{examNum,jdbcType=INTEGER},
+      </if>
+      <if test="examHall != null" >
+        #{examHall,jdbcType=VARCHAR},
+      </if>
+      <if test="examPaper != null" >
+        #{examPaper,jdbcType=VARCHAR},
+      </if>
+      <if test="examTeacher != null" >
+        #{examTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="examTime != null" >
+        #{examTime,jdbcType=VARCHAR},
+      </if>
+      <if test="examState != null" >
+        #{examState,jdbcType=INTEGER},
+      </if>
+      <if test="examStulist != null" >
+        #{examStulist,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mmall.pojo.Exam" >
+    update exam
+    <set >
+      <if test="examSub != null" >
+        exam_sub = #{examSub,jdbcType=VARCHAR},
+      </if>
+      <if test="examNum != null" >
+        exam_num = #{examNum,jdbcType=INTEGER},
+      </if>
+      <if test="examHall != null" >
+        exam_hall = #{examHall,jdbcType=VARCHAR},
+      </if>
+      <if test="examPaper != null" >
+        exam_paper = #{examPaper,jdbcType=VARCHAR},
+      </if>
+      <if test="examTeacher != null" >
+        exam_teacher = #{examTeacher,jdbcType=VARCHAR},
+      </if>
+      <if test="examTime != null" >
+        exam_time = #{examTime,jdbcType=VARCHAR},
+      </if>
+      <if test="examState != null" >
+        exam_state = #{examState,jdbcType=INTEGER},
+      </if>
+      <if test="examStulist != null" >
+        exam_stulist = #{examStulist,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mmall.pojo.Exam" >
+    update exam
+    set exam_sub = #{examSub,jdbcType=VARCHAR},
+      exam_num = #{examNum,jdbcType=INTEGER},
+      exam_hall = #{examHall,jdbcType=VARCHAR},
+      exam_paper = #{examPaper,jdbcType=VARCHAR},
+      exam_teacher = #{examTeacher,jdbcType=VARCHAR},
+      exam_time = #{examTime,jdbcType=VARCHAR},
+      exam_state = #{examState,jdbcType=INTEGER},
+      exam_stulist = #{examStulist,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mmall.pojo.Exam" >
+    update exam
+    set exam_sub = #{examSub,jdbcType=VARCHAR},
+      exam_num = #{examNum,jdbcType=INTEGER},
+      exam_hall = #{examHall,jdbcType=VARCHAR},
+      exam_paper = #{examPaper,jdbcType=VARCHAR},
+      exam_teacher = #{examTeacher,jdbcType=VARCHAR},
+      exam_time = #{examTime,jdbcType=VARCHAR},
+      exam_state = #{examState,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

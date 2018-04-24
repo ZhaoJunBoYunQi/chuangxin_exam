@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mmall.dao.AdminDao" >
+  <resultMap id="BaseResultMap" type="com.mmall.pojo.Admin" >
+   <!-- <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="admin_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="admin_pwd" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>-->
+    <result property="id" column="id"/>
+    <result property="adminId" column="admin_id"/>
+    <result property="adminPwd" column="admin_pwd"/>
+
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, admin_id, admin_pwd
+  </sql>
+<!--  <select id="list" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from admin
+    where id = #{id,jdbcType=INTEGER}
+  </select>-->
+  <select id="list" parameterType="Map" resultMap="BaseResultMap">
+    select * from admin
+    <if test="start!=null and size!=null">
+      limit #{start},#{size}
+    </if>
+  </select>
+  <select id="getTotal" parameterType="Map" resultType="Long">
+    select count(*) from admin
+  </select>
+
+
+
+  <insert id="insert" parameterType="com.mmall.pojo.Admin" >
+    insert into admin (admin_id, admin_pwd)
+    values (#{adminId,jdbcType=VARCHAR}, #{adminPwd,jdbcType=VARCHAR})
+  </insert>
+<!--<update id="update" parameterType="com.mmall.pojo.admin">
+  update admin set admin_id=#{adminId},admin_pwd=#{adminPwd} WHERE id=#{id}
+</update>-->
+
+   <update id="update" parameterType="com.mmall.pojo.Admin">
+      update admin
+      <set>
+        <if test="adminId!=null and adminId!='' ">
+            admin_id=#{adminId},
+        </if>
+        <if test="adminPwd!=null ">
+          admin_pwd=#{adminPwd},
+        </if>
+      </set>
+      where id=#{id}
+    </update>
+
+<delete id="delete" parameterType="Integer">
+  delete  from admin where id=#{id}
+</delete>
+  <insert id="insertSelective" parameterType="com.mmall.pojo.Admin" >
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="adminPwd != null" >
+        admin_pwd,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="adminId != null" >
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="adminPwd != null" >
+        #{adminPwd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

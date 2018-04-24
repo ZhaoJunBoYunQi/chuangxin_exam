@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mmall.dao.TeacherDao" >
+  <resultMap id="BaseResultMap" type="com.mmall.pojo.Teacher" >
+   <!-- <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="tea_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tea_pwd" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>-->
+
+    <result property="id" column="id"/>
+    <result property="teaId" column="tea_id"/>
+    <result property="teaPwd" column="tea_pwd"/>
+  </resultMap>
+
+  <select id="list" parameterType="Map" resultMap="BaseResultMap">
+    select * from teacher
+    <if test="start!=null and size!=null">
+      limit #{start},#{size}
+    </if>
+  </select>
+  <select id="getTotal" parameterType="Map" resultType="Long">
+    select count(*) from teacher
+  </select>
+
+
+
+  <sql id="Base_Column_List" >
+    id, tea_id, tea_pwd
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from teacher
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mmall.pojo.Teacher" >
+    insert into teacher (id, tea_id, tea_pwd
+      )
+    values (#{id,jdbcType=INTEGER}, #{teaId,jdbcType=VARCHAR}, #{teaPwd,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mmall.pojo.Teacher" >
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="teaId != null" >
+        tea_id,
+      </if>
+      <if test="teaPwd != null" >
+        tea_pwd,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="teaId != null" >
+        #{teaId,jdbcType=VARCHAR},
+      </if>
+      <if test="teaPwd != null" >
+        #{teaPwd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mmall.pojo.Teacher" >
+    update teacher
+    <set >
+      <if test="teaId != null" >
+        tea_id = #{teaId,jdbcType=VARCHAR},
+      </if>
+      <if test="teaPwd != null" >
+        tea_pwd = #{teaPwd,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mmall.pojo.Teacher" >
+    update teacher
+    set tea_id = #{teaId,jdbcType=VARCHAR},
+      tea_pwd = #{teaPwd,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

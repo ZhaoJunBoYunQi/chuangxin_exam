@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mmall.dao.Student_tbDao" >
+  <resultMap id="BaseResultMap" type="com.mmall.pojo.Student_tb" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="std_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="std_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="std_class" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="std_sex" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="std_pwd" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="std_ip" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="std_exam" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="std_state" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, std_id, std_name, std_class, std_sex, std_pwd, std_ip, std_exam, std_state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from student_tb
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from student_tb
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mmall.pojo.Student_tb" >
+    insert into student_tb (id, std_id, std_name, 
+      std_class, std_sex, std_pwd, 
+      std_ip, std_exam, std_state
+      )
+    values (#{id,jdbcType=INTEGER}, #{stdId,jdbcType=VARCHAR}, #{stdName,jdbcType=VARCHAR}, 
+      #{stdClass,jdbcType=VARCHAR}, #{stdSex,jdbcType=VARCHAR}, #{stdPwd,jdbcType=VARCHAR}, 
+      #{stdIp,jdbcType=VARCHAR}, #{stdExam,jdbcType=VARCHAR}, #{stdState,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mmall.pojo.Student_tb" >
+    insert into student_tb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stdId != null" >
+        std_id,
+      </if>
+      <if test="stdName != null" >
+        std_name,
+      </if>
+      <if test="stdClass != null" >
+        std_class,
+      </if>
+      <if test="stdSex != null" >
+        std_sex,
+      </if>
+      <if test="stdPwd != null" >
+        std_pwd,
+      </if>
+      <if test="stdIp != null" >
+        std_ip,
+      </if>
+      <if test="stdExam != null" >
+        std_exam,
+      </if>
+      <if test="stdState != null" >
+        std_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stdId != null" >
+        #{stdId,jdbcType=VARCHAR},
+      </if>
+      <if test="stdName != null" >
+        #{stdName,jdbcType=VARCHAR},
+      </if>
+      <if test="stdClass != null" >
+        #{stdClass,jdbcType=VARCHAR},
+      </if>
+      <if test="stdSex != null" >
+        #{stdSex,jdbcType=VARCHAR},
+      </if>
+      <if test="stdPwd != null" >
+        #{stdPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="stdIp != null" >
+        #{stdIp,jdbcType=VARCHAR},
+      </if>
+      <if test="stdExam != null" >
+        #{stdExam,jdbcType=VARCHAR},
+      </if>
+      <if test="stdState != null" >
+        #{stdState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mmall.pojo.Student_tb" >
+    update student_tb
+    <set >
+      <if test="stdId != null" >
+        std_id = #{stdId,jdbcType=VARCHAR},
+      </if>
+      <if test="stdName != null" >
+        std_name = #{stdName,jdbcType=VARCHAR},
+      </if>
+      <if test="stdClass != null" >
+        std_class = #{stdClass,jdbcType=VARCHAR},
+      </if>
+      <if test="stdSex != null" >
+        std_sex = #{stdSex,jdbcType=VARCHAR},
+      </if>
+      <if test="stdPwd != null" >
+        std_pwd = #{stdPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="stdIp != null" >
+        std_ip = #{stdIp,jdbcType=VARCHAR},
+      </if>
+      <if test="stdExam != null" >
+        std_exam = #{stdExam,jdbcType=VARCHAR},
+      </if>
+      <if test="stdState != null" >
+        std_state = #{stdState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mmall.pojo.Student_tb" >
+    update student_tb
+    set std_id = #{stdId,jdbcType=VARCHAR},
+      std_name = #{stdName,jdbcType=VARCHAR},
+      std_class = #{stdClass,jdbcType=VARCHAR},
+      std_sex = #{stdSex,jdbcType=VARCHAR},
+      std_pwd = #{stdPwd,jdbcType=VARCHAR},
+      std_ip = #{stdIp,jdbcType=VARCHAR},
+      std_exam = #{stdExam,jdbcType=VARCHAR},
+      std_state = #{stdState,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
