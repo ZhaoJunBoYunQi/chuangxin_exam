@@ -10,7 +10,7 @@
                         http://www.springframework.org/schema/mvc
                         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
     <!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
-    <context:component-scan base-package="com.mmall.common.controller" />
+    <context:component-scan base-package="com.zjb.controller" />
     <!--避免IE执行AJAX时，返回JSON出现下载文件 -->
     <!--<bean id="mappingJacksonHttpMessageConverter"
           class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
@@ -23,7 +23,7 @@
     <mvc:annotation-driven/>
     <!-- 启动SpringMVC的注解功能，完成请求和注解POJO的映射
     -->
-
+    <mvc:resources mapping="/assets/**" location="/assets/"/>
     <mvc:resources mapping="/static/**" location="/static/"/>
     <!-- 定义跳转的文件的前后缀 ，视图模式配置-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
